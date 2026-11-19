@@ -15,7 +15,7 @@
 
 Public Stellar account reads, captured from Horizon and kept honest by a validator.
 
-[Documentation site & Specimen Vault](https://posture-sec.github.io/stellar-account-fixtures/) · [Schema Specification](SCHEMA.md) · [The Nine Accounts](#the-nine-accounts) · [Adding a Fixture](#adding-a-fixture) · [Contributing](CONTRIBUTING.md)
+[Documentation site & Specimen Vault](https://posture-sec.github.io/stellar-account-fixtures/) · [Schema Specification](SCHEMA.md) · [The Nine Accounts](#the-nine-accounts) · [Data Entries](corpus/data-entries.md) · [Root Diff](corpus/root-diff.md) · [Adding a Fixture](#adding-a-fixture) · [Contributing](CONTRIBUTING.md)
 
 Gauge audits the configuration of a real Stellar account. Airlock scans Stellar
 repositories. Both need account-shaped JSON that is not invented: a rule written against
@@ -35,6 +35,8 @@ fixtures/
   testnet-multisig/        account.json  fixture.toml
   whitespace-home-domain/  account.json  fixture.toml
 corpus/
+  data-entries.md
+  root-diff.md
   root-public.json
   root-testnet.json
 ```
@@ -75,7 +77,7 @@ seed-shaped string (`S...`) is refused by both the capture tool and the validato
 | Indicator | Value | Source |
 |---|---|---|
 | Verified Captures | **9 accounts** (8 Mainnet, 1 Test) | `fixtures/` |
-| Test Suite | **115 passing** | `python -m unittest` |
+| Test Suite | **126 passing** | `python -m unittest` |
 | Integrity Assurance | **SHA-256 sidecars verified** | `validate.py` |
 | Safety Invariant | **Zero secret keys (`S...`)** | Validator enforced |
 <!-- METRICS:END -->
@@ -94,13 +96,13 @@ A cryptographic specimen vault and ledger matrix is published at **[https://post
 | `asset-heavy-exchange` | 37 trustlines and a home domain. The account shape that makes a naive response body large. |
 | `whitespace-home-domain` | `home_domain` is a single space, which a tool that trims before validating reads as absent. |
 | `domain-and-inflation` | `lobstr.co` plus an inflation destination: a well-formed SEP-1 candidate to check the positive path against. |
-| `coordinator-data-entry` | The `data` object holds one entry, `config.multisig.coordinator`, whose base64 value decodes to `v1.multisig.satoshipay.io`. Nine signers, the master key at weight 0 and every threshold at 2. |
+| `coordinator-data-entry` | The `data` object holds one entry, `config.multisig.coordinator`, whose base64 value decodes to `v1.multisig.satoshipay.io`. Nine signers, the master key at weight 0 and every threshold at 2. See [Account Data Entries](corpus/data-entries.md). |
 | `sponsored-trustlines` | `num_sponsored` 17 against `num_sponsoring` 0: seventeen balances, two signers and a home domain of `sl8.online`, an account whose own entries are paid for by someone else. |
 | `testnet-multisig` | The first testnet capture: six signers, master weight 0 and all three thresholds at 3, read from `horizon-testnet.stellar.org`. It is what makes `corpus/root-testnet.json` a real root document rather than one the tests write. |
 
 Account ids are in each sidecar. Eight are mainnet (`network = "public"`) and one is testnet
 (`network = "testnet"`), and the root document for each network is the one the capture tool
-fetched while writing it.
+fetched while writing it; see [Root Diff Analysis](corpus/root-diff.md).
 
 ## Using it from another project
 

@@ -130,8 +130,19 @@ part.
 
 ## 6. Root documents
 
-Every network used by any fixture must have `corpus/root-<network>.json`, and its
-`network_passphrase` must be the one that network is supposed to have:
+### Contract and Purpose
+
+Every network referenced by any fixture in the corpus must provide a corresponding
+root document at `corpus/root-<network>.json`. Root documents establish cryptographic
+ground truth and network identity for fixtures captured from that network.
+
+### Cryptographic Ground Truth
+
+In Stellar, the `network_passphrase` serves as the cryptographic ground truth for all
+transaction verification and signature checking. Transactions are cryptographically
+bound to a network via `sha256(network_passphrase)` prepended to the signature payload.
+A fixture claiming to originate from a network is valid only in the context of that
+network's exact passphrase:
 
 | Network | Passphrase |
 |---|---|
@@ -141,6 +152,30 @@ Every network used by any fixture must have `corpus/root-<network>.json`, and it
 The root document is why a fixture cannot quietly be from somewhere else. `mainnet` and
 `public` are the same network with different names in different tools; this corpus says
 `public` because that is what Horizon and the passphrase both say.
+
+### Payload Structure and Requirements
+
+Each root document must satisfy the following structural requirements:
+1. **File Location**: `corpus/root-<network>.json` for every network in the corpus.
+2. **Valid JSON**: The file must be valid UTF-8 JSON.
+3. **Top-Level Object**: The JSON payload must parse as a key-value object (mapping).
+4. **Network Passphrase Matching**: The `network_passphrase` top-level string key must
+   equal the immutable passphrase string configured for that network.
+
+### Validator Enforcement and Error Conditions
+
+In `validate.py:370`, `check_root` enforces these invariants across every active network.
+Failure to satisfy the contract results in specific validator error conditions:
+
+1. **Missing Root File**: If `corpus/root-<network>.json` does not exist for a referenced
+   network, the validator reports:
+   `missing; every network used must have its root document`
+2. **Malformed JSON**: If the file cannot be parsed as JSON, the validator reports:
+   `not JSON: <parse_error>`
+3. **Non-Object Root**: If the JSON root is an array, primitive, or null instead of an object:
+   `not a JSON object`
+4. **Passphrase Mismatch**: If `network_passphrase` does not match the hardcoded network constant:
+   `network_passphrase '<observed>' is not the <network> passphrase`
 
 ## 7. Versioning
 
