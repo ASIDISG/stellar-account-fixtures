@@ -1,6 +1,6 @@
 # ROADMAP: Stellar account fixtures
 
-Last updated: 2026-11-20 02:56 UTC
+Last updated: 2026-11-21 07:38 UTC
 
 A corpus of public Stellar account reads, their provenance, and the validator that keeps
 the provenance honest. Nothing here is a claim about whether an account is well
@@ -36,9 +36,9 @@ empty gap list is gate G2.
 |---|---|---|---|---|
 | 0 | Ground truth | 5 | 6 | 83% |
 | 1 | Repository wrapper | 10 | 10 | 100% |
-| 2 | Coverage | 10 | 13 | 77% |
+| 2 | Coverage | 14 | 17 | 82% |
 | 3 | Consumer contract | 3 | 4 | 75% |
-| **All phases** | **Readiness total** | **28** | **33** | **85%** |
+| **All phases** | **Readiness total** | **32** | **37** | **86%** |
 | Gates | G1 to G5 | 2 | 5 | 40% |
 <!-- PROGRESS:END -->
 
@@ -139,6 +139,10 @@ python3 scripts/roadmap_progress.py --check ROADMAP.md
 - [x] **2.11** Worked sidecar examples for captured and synthetic fixtures in `SCHEMA.md` Section 3. S. Deps: 0.1. Done when: `SCHEMA.md` provides complete, copy-pasteable TOML examples for both kinds, validating under `validate.py` rules, verified by `tests/test_validate_schema_worked_examples.py`. **Issue:** #39. (done 2026-11-20: added worked examples in `SCHEMA.md` Section 3 and `tests/test_validate_schema_worked_examples.py`; issue #39.)
 - [x] **2.12** Derive the mainnet vs testnet network split dynamically in `scripts/sync_readme.py`. S. Deps: 0.4. Done when: `scripts/sync_readme.py` dynamically computes capture counts from `fixture.toml` sidecars and interpolates into README metrics table, verified by `tests/test_readme_network_split.py`. **Issue:** #100. (done 2026-11-20: dynamic network count derivation in `scripts/sync_readme.py` and `tests/test_readme_network_split.py`; issue #100.)
 - [x] **2.13** Generate the nine-account README table from sidecar metadata in `scripts/sync_readme.py`. S. Deps: 0.4. Done when: `README.md` wraps the accounts table in ACCOUNTS markers, `scripts/sync_readme.py` renders rows sorted alphabetically by id from `fixture.toml`, and `tests/test_readme_fixture_table.py` proves synchronization. **Issue:** #101. (done 2026-11-20: automated accounts table generation in `scripts/sync_readme.py`, ACCOUNTS markers in `README.md`, and `tests/test_readme_fixture_table.py`; issue #101.)
+- [x] **2.14** Reject a sidecar that lists the same shape label twice: `validate.py` reports each repeated label by name for captured and synthetic fixtures, and `tests/test_schema_shape_duplicates.py` proves it. S. Deps: 0.5. Done when: a duplicate label is a validator problem naming that label, and all nine captures still validate. **Issue:** #95. (done 2026-11-20: `check_common` compares the list length with its set and emits one error per repeated token; the suite covers one duplicate, two duplicates, a triple, the synthetic path and the shipped corpus.)
+- [x] **2.15** Bound `scenario` to one printable line of at most 200 characters: `tools/capture.py` refuses bad values before a request, `validate.py` checks every sidecar, `SCHEMA.md` 3 documents the rule, and `tests/test_schema_scenario_bounds.py` covers both ends. S. Deps: 0.1. Done when: control characters, newlines and text over 200 characters are refused by both tools, printable UTF-8 prose passes, and all nine shipped scenarios qualify. **Issue:** #97. (done 2026-11-20: one shared `scenario_error` gate in `validate.py`, imported by the capture tool; the suite covers the 200 and 201 character boundaries, TOML escapes for newline, tab and control codes, early refusal without a fetch, and the shipped scenarios.)
+- [x] **2.16** Pin `schema_version` to the integer 1 in a sidecar, with exact diagnostics covered by `tests/test_schema_version_gate.py`. S. Deps: 0.1. Done when: string `1`, float `1.0`, booleans and other integers are refused with the exact message, and integer 1 passes cleanly. **Issue:** #98. (done 2026-11-20: the suite drives `load_manifest` over synthetic sidecars and asserts each exact diagnostic, including the `True` case that a bare equality check would let through.)
+- [x] **2.17** Prove `source_url` sits on the declared network host, with `tests/test_schema_source_host.py`. S. Deps: 2.6. Done when: cross-network and external URLs report both the actual and the expected URL, and all nine shipped fixtures satisfy the invariant. **Issue:** #99. (done 2026-11-20: the suite rejects a public fixture claiming the testnet endpoint, a testnet fixture claiming the public endpoint, an external host and a wrong account path, then reads all nine shipped sidecars to check host and account together.)
 
 ### Phase 3: Consumer contract
 
@@ -161,6 +165,7 @@ python3 scripts/roadmap_progress.py --check ROADMAP.md
 
 | When | What | Tasks |
 |---|---|---|
+| 2026-11-20 17:32 | Tasks 2.14 to 2.17 (closing #95, #97, #98, #99): `validate.py` now reports each repeated shape label by name for captured and synthetic fixtures, `scenario` is one printable line of at most 200 characters enforced by both the capture tool and the validator and documented in `SCHEMA.md` 3, the schema version gate has exact-diagnostic tests for strings, floats, booleans and other integers, and source host agreement has tests for both endpoints and the shipped corpus. Four new suites land in `tests/`; README metrics and the Shields.io test badge were regenerated from the new count. | 2.14, 2.15, 2.16, 2.17 |
 | 2026-11-20 02:56 | Tasks 2.11 to 2.13 and 3.1 to 3.2 (closing #18, #39, #100, #101): worked sidecar examples in SCHEMA.md Section 3 with tests (#39), dynamic network split derivation (#100) and automated accounts table generation (#101) in scripts/sync_readme.py, and tools/manifest.py with D-03 decision recorded for consumer content pinning (#18). Verified by test suites with zero em dashes. | 2.11, 2.12, 2.13, 3.1, 3.2 |
 | 2026-11-19 19:37 | Tasks 2.7 to 2.10 (closing #46, #48, #80, #81): document coordinator data entry in `corpus/data-entries.md`, diff root documents in `corpus/root-diff.md`, document root contract in `SCHEMA.md` Section 6 with contract sync tests in `tests/test_validate_schema_root_contract.py`, and align `SCHEMA.md` Section 5 shape table with `validate.py` with test parity in `tests/test_validate_schema_shape_table.py`. | 2.7, 2.8, 2.9, 2.10 |
 | 2026-11-09 14:50 | Finalize Drips Wave 11 submission packet (docs/WAVE_SUBMISSION.md) for Stellar Wave 11 (Nov 18–25, 2026), documenting 115 tests passing, 9 captures, live documentation site at https://posture-sec.github.io/stellar-account-fixtures/, OpenSSF Scorecard 5.2, and 4 scoped Wave backlog issues (#13, #14, #15, #17). | none ticked |
