@@ -54,8 +54,10 @@ network, Horizon source URL, verified root document, and verified network passph
 | `sponsored-trustlines` | `public` | `https://horizon.stellar.org/accounts/GCPEC2WSEJPAFPLPPDPBU3XI6SXHJUZD2KLUA6BBBPO7WES3W5ZKDE54` | `corpus/root-public.json` | `Public Global Stellar Network ; September 2015` |
 | `ten-balances-boundary` | `public` | `https://horizon.stellar.org/accounts/GA6H7KUNUTSKIE2RYMGLOOEKJMKIS7UTR2T6LIKSIUMNMJXOKXYGX5SQ` | `corpus/root-public.json` | `Public Global Stellar Network ; September 2015` |
 | `testnet-multisig` | `testnet` | `https://horizon-testnet.stellar.org/accounts/GCI76XDVHDGJMZGP5EWQYCZCYIBNBVABLPHWCKEZWJF2K4Z5SD74A4AV` | `corpus/root-testnet.json` | `Test SDF Network ; September 2015` |
+| `testnet-plain` | `testnet` | `https://horizon-testnet.stellar.org/accounts/GADXTFPD7JFAQ2Q3C5MNDPFB75G6EZ6DLVJSFQOHNYFKEXZWB675HSS4` | `corpus/root-testnet.json` | `Test SDF Network ; September 2015` |
 | `testnet-sponsored` | `testnet` | `https://horizon-testnet.stellar.org/accounts/GBORJ5OEACW7Z22O46ZFNZRZC5IL36HYV7GF7DHGLJ3BE3MVWYV57YAQ` | `corpus/root-testnet.json` | `Test SDF Network ; September 2015` |
 | `whitespace-home-domain` | `public` | `https://horizon.stellar.org/accounts/GBDAZM3LPTHP3IFPDAUQGLSANPW5S5K5WFKBFVHQ3SMT3JDRQICMTSNZ` | `corpus/root-public.json` | `Public Global Stellar Network ; September 2015` |
+| `unnormalized-home-domain` | `public` | `https://horizon.stellar.org/accounts/GAV2ZAQUTCTKYQVFM75A4MNR2Z4SMKE6P65WNS46QYEHS3UUCVF6JODC` | `corpus/root-public.json` | `Public Global Stellar Network ; September 2015` |
 
 ## 4. Synthetic Fixture Network Isolation
 
