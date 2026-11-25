@@ -27,10 +27,12 @@ The validator counts total balances, not trustlines. The `many_balances` label b
 | `null-home-domain` | public | 1 | 1 | 0 | 0 | 0 | 0 | no |
 | `sponsored-trustlines` | public | 17 | 1 | 10 | 6 | 16 | 15 | yes |
 | `ten-balances-boundary` | public | 10 | 1 | 6 | 3 | 9 | 9 | yes |
+| `unnormalized-home-domain` | public | 1 | 1 | 0 | 0 | 0 | 0 | no |
 | `testnet-multisig` | testnet | 1 | 1 | 0 | 0 | 0 | 0 | no |
+| `testnet-plain` | testnet | 1 | 1 | 0 | 0 | 0 | 0 | no |
 | `testnet-sponsored` | testnet | 2 | 1 | 1 | 0 | 1 | 1 | no |
 | `whitespace-home-domain` | public | 5 | 1 | 3 | 1 | 4 | 4 | no |
-| **All twelve** | | **94** | **12** | **59** | **23** | **82** | | **3 of 12** |
+| **All fourteen** | | **96** | **14** | **59** | **23** | **82** | | **3 of 14** |
 
 "Distinct issuers" counts different `asset_issuer` values among the trustlines of one account. It is lower than the trustline count when one issuer supplies more than one asset, as in `multisig-custody` where four trustlines come from two issuers. `asset-heavy-exchange` holds 36 trustlines from 35 issuers.
 
@@ -38,11 +40,11 @@ Counts are taken directly from the `balances` arrays in `fixtures/<id>/account.j
 
 ## 3. Asset types
 
-Exactly three `asset_type` values appear across the 94 balance entries:
+Exactly three `asset_type` values appear across the 96 balance entries:
 
 | `asset_type` | Meaning | Entries | Carries `asset_code`, `asset_issuer`, `limit` |
 |---|---|---|---|
-| `native` | the lumen balance | 12 | no |
+| `native` | the lumen balance | 14 | no |
 | `credit_alphanum4` | an issued asset whose code is 1 to 4 characters | 59 | yes |
 | `credit_alphanum12` | an issued asset whose code is 5 to 12 characters | 23 | yes |
 

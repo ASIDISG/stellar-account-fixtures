@@ -1,10 +1,10 @@
 # Fixtures index
 
-> A one-page map of the twelve fixtures (eleven captures and one synthetic account), so a consumer can choose a fixture without opening twenty-four files.
+> A one-page map of the fourteen fixtures (thirteen captures and one synthetic account), so a consumer can choose a fixture without opening twenty-eight files.
 
 Each directory below holds exactly two files: `account.json` (the Horizon response, verbatim) and `fixture.toml` (the sidecar that says where the bytes came from). The layout rules are in [SCHEMA.md](../SCHEMA.md) section 1, and this index is a reading aid, not a second source of truth: when it disagrees with a sidecar, the sidecar and `python3 validate.py --report` are right.
 
-## 1. The twelve fixtures
+## 1. The fourteen fixtures
 
 | Directory | Network | Ledger | Shape labels | Why it is here |
 |---|---|---|---|---|
@@ -17,11 +17,13 @@ Each directory below holds exactly two files: `account.json` (the Horizon respon
 | [`null-home-domain`](null-home-domain/) | public | none | `master_is_signer`, `no_data`, `no_home_domain`, `no_inflation`, `not_sponsored`, `not_sponsoring`, `single_signer`, `thresholds_zero` | the one synthetic fixture: a home domain that is an explicit null, for parsers that must not fail on it |
 | [`sponsored-trustlines`](sponsored-trustlines/) | public | 65110665 | `has_home_domain`, `many_balances`, `master_is_signer`, `multi_signer`, `no_data`, `no_inflation`, `not_sponsoring`, `sponsored`, `thresholds_nonzero` | an account whose own entries are paid for by someone else |
 | [`ten-balances-boundary`](ten-balances-boundary/) | public | 65631935 | `many_balances`, `master_is_signer`, `no_data`, `no_home_domain`, `no_inflation`, `not_sponsored`, `not_sponsoring`, `single_signer`, `thresholds_zero` | exactly ten balances, the smallest array that carries `many_balances` |
+| [`unnormalized-home-domain`](unnormalized-home-domain/) | public | 56040206 | `has_home_domain`, `master_is_signer`, `no_data`, `no_inflation`, `not_sponsored`, `not_sponsoring`, `single_signer`, `thresholds_zero` | a `home_domain` that carries uppercase characters (`StellarHQ.io`), for SEP-1 case-folding in consumers |
 | [`testnet-multisig`](testnet-multisig/) | testnet | 5535101 | `master_is_signer`, `multi_signer`, `no_data`, `no_home_domain`, `no_inflation`, `not_sponsored`, `not_sponsoring`, `thresholds_nonzero` | six signers with the master at weight 0, the first testnet capture |
+| [`testnet-plain`](testnet-plain/) | testnet | 5895891 | `master_is_signer`, `no_data`, `no_home_domain`, `no_inflation`, `not_sponsored`, `not_sponsoring`, `single_signer`, `thresholds_zero` | a plain single-signer testnet baseline, the control next to `testnet-multisig` |
 | [`testnet-sponsored`](testnet-sponsored/) | testnet | 5884375 | `master_is_signer`, `no_data`, `no_home_domain`, `no_inflation`, `not_sponsoring`, `single_signer`, `sponsored`, `thresholds_zero` | a testnet account whose entries are paid for by someone else |
 | [`whitespace-home-domain`](whitespace-home-domain/) | public | 65266813 | `blank_home_domain`, `has_inflation`, `master_is_signer`, `no_data`, `not_sponsored`, `single_signer`, `sponsoring`, `thresholds_zero` | a home domain that is a single space, which a tool that trims before validating reads as absent |
 
-Ten fixtures are on the public network (nine captures and the synthetic one) and two are on testnet. Ledger is the sidecar `ledger` value, which `validate.py` requires to be at least the account's `last_modified_ledger`. The synthetic fixture has none, because nothing was read from a ledger. Three captures (`default-plain`, `domain-and-inflation` and `whitespace-home-domain`) record the same ledger, 65266813.
+Eleven fixtures are on the public network (ten captures and the synthetic one) and three are on testnet. Ledger is the sidecar `ledger` value, which `validate.py` requires to be at least the account's `last_modified_ledger`. The synthetic fixture has none, because nothing was read from a ledger. Three captures (`default-plain`, `domain-and-inflation` and `whitespace-home-domain`) record the same ledger, 65266813.
 
 ## 2. Reading the shape labels
 
