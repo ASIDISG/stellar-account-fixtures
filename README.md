@@ -15,7 +15,7 @@
 
 Public Stellar account reads, captured from Horizon and kept honest by a validator.
 
-[Documentation site & Specimen Vault](https://posture-sec.github.io/stellar-account-fixtures/) · [Schema Specification](SCHEMA.md) · [The Nine Accounts](#the-nine-accounts) · [Shape Matrix](corpus/shape-matrix.md) · [Provenance](corpus/provenance.md) · [Signers](corpus/signers.md) · [Thresholds](corpus/thresholds.md) · [Data Entries](corpus/data-entries.md) · [Root Diff](corpus/root-diff.md) · [Network Conformance](corpus/network-conformance.md) · [Adding a Fixture](#adding-a-fixture) · [Contributing](CONTRIBUTING.md)
+[Documentation site & Specimen Vault](https://posture-sec.github.io/stellar-account-fixtures/) · [Schema Specification](SCHEMA.md) · [The Nine Accounts](#the-nine-accounts) · [Shape Matrix](corpus/shape-matrix.md) · [Provenance](corpus/provenance.md) · [Signers](corpus/signers.md) · [Thresholds](corpus/thresholds.md) · [Data Entries](corpus/data-entries.md) · [Root Diff](corpus/root-diff.md) · [Network Conformance](corpus/network-conformance.md) · [Account Links](corpus/account-links.md) · [Balances](corpus/balances.md) · [Fixtures Index](fixtures/README.md) · [Corpus Guide](corpus/README.md) · [Adding a Fixture](#adding-a-fixture) · [Contributing](CONTRIBUTING.md)
 
 Gauge audits the configuration of a real Stellar account. Airlock scans Stellar
 repositories. Both need account-shaped JSON that is not invented: a rule written against
@@ -25,6 +25,7 @@ verbatim, each with the provenance that lets you check the claim.
 
 ```
 fixtures/
+  README.md
   asset-heavy-exchange/    account.json  fixture.toml
   coordinator-data-entry/  account.json  fixture.toml
   default-plain/           account.json  fixture.toml
@@ -38,6 +39,9 @@ fixtures/
   testnet-sponsored/       account.json  fixture.toml
   whitespace-home-domain/  account.json  fixture.toml
 corpus/
+  README.md
+  account-links.md
+  balances.md
   choosing-a-fixture.md
   data-entries.md
   network-conformance.md
@@ -90,7 +94,7 @@ seed-shaped string (`S...`) is refused by both the capture tool and the validato
 | Indicator | Value | Source |
 |---|---|---|
 | Verified Captures | **12 accounts** (10 Mainnet, 2 Test) | `fixtures/` |
-| Test Suite | **278 passing** | `python -m unittest` |
+| Test Suite | **318 passing** | `python -m unittest` |
 | Integrity Assurance | **SHA-256 sidecars verified** | `validate.py` |
 | Safety Invariant | **Zero secret keys (`S...`)** | Validator enforced |
 <!-- METRICS:END -->
