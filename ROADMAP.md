@@ -1,6 +1,6 @@
 # ROADMAP: Stellar account fixtures
 
-Last updated: 2026-11-24 07:22 UTC
+Last updated: 2026-11-24 08:22 UTC
 
 A corpus of public Stellar account reads, their provenance, and the validator that keeps
 the provenance honest. Nothing here is a claim about whether an account is well
@@ -172,7 +172,7 @@ python3 scripts/roadmap_progress.py --check ROADMAP.md
 - [x] **3.2** Gauge's rule tests read fixtures from here rather than carrying their own copies, which needs D-03 decided first. M. Deps: 3.1, D-03. Done when: a Gauge test names the fixture id it used. **Issue:** #18. (done 2026-11-20: D-03 recorded, `tools/manifest.py` provided for consumer content pinning, offline consumption contract documented; issue #18.)
 - [ ] **3.3** Airlock's Stellar-side detectors use at least one fixture from here. S. Deps: 3.1. Done when: G5 is ticked with the two repository names. **Issue:** #19.
 - [x] **3.4** This corpus reads one of its own captures back from the chain through the sibling action: `.posture/gauge.toml` declares the account behind `fixtures/testnet-multisig` as the capture describes it, and `.github/workflows/posture-watch.yml` runs that declaration on a schedule by `uses: posture-sec/stellar-posture-watch@<sha>`. S. Deps: none. Done when: the workflow has run on a runner from `main`, the tracking issue it maintains is named here with its label and the ledger it read, and the action's own roadmap can say a repository other than its own consumes it. **Issue:** #27. (done 2026-11-05 08:11: three dispatches of `posture-watch.yml` from `main` at `71dfffc`, whose logs are in section 7's row, opened issue #29 with the label `fixture-drift` at ledger 5568533 and left it alone on the run after that, and the action's own roadmap now names this repository as its second consumer.)
-- [x] **3.5** Keep the documented `tools/capture.py` CLI options in sync with its argparse declarations. S. Deps: none. Done when: `tests/test_docs_capture_flags.py` statically extracts parser options and documented command flags, rejects missing or unknown flags, and proves `--root` and `--update` are documented in `CONTRIBUTING.md`. **Issue:** #105. (done 2026-11-24: updated the capture examples in `CONTRIBUTING.md` and `README.md`, and added the static documentation contract test.)
+- [x] **3.5** Document raw `home_domain` values and the whitespace-only case in `corpus/home-domains.md`, and link it from the README shape notes. S. Deps: 0.5. Done when: all nine captured values or omitted keys are tabulated exactly, the single-space JSON string is visibly quoted, SEP-1 discovery and the three validator labels are explained, and the document is cross-referenced from `README.md`. **Issue:** #47. (done 2026-11-24: table documents all nine JSON values or omitted keys, SEP-1 discovery, the validator distinction and the visible single-space value; README linked; requested checks pass.)
 
 ## 6. Decision log
 
@@ -188,6 +188,7 @@ python3 scripts/roadmap_progress.py --check ROADMAP.md
 
 | When | What | Tasks |
 |---|---|---|
+| 2026-11-24 08:22 | Add `corpus/home-domains.md` with the exact JSON value or omitted-key state for all nine captures, explain the single ASCII space and SEP-1 discovery, and link the table from the README shape notes. Verified: `python3 validate.py`; discovery unittest suite (177 tests); `test_validate.py` suite (97 tests); Ruff lint and format checks; targeted mypy; roadmap progress check; and README sync check all pass. | 3.5 |
 | 2026-11-24 07:22 | Task 3.5 (issue #105): keep the documented capture CLI options in sync with `tools/capture.py` by adding explicit `--root` and `--update` examples, a standard-library AST/code-block contract test, and the regenerated test-count badge. | 3.5 |
 | 2026-11-24 07:21 | Task 2.39 (#49): add `corpus/capture-log.md` with the nine sidecar captures ordered by UTC timestamp, call out the sponsored-trustlines ledger lag, link the log from `README.md`, and add a test that compares every table value and order with the source sidecars. | 2.39 |
 | 2026-11-24 06:52 | Replace the report block's dated checkout claim with an illustrative baseline note and direct command, and add a contract test preventing dated report notes. | 3.5 |
