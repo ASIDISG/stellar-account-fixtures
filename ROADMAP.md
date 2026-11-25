@@ -1,6 +1,6 @@
 # ROADMAP: Stellar account fixtures
 
-Last updated: 2026-11-24 06:58 UTC
+Last updated: 2026-11-24 06:52 UTC
 
 A corpus of public Stellar account reads, their provenance, and the validator that keeps
 the provenance honest. Nothing here is a claim about whether an account is well
@@ -175,7 +175,7 @@ python3 scripts/roadmap_progress.py --check ROADMAP.md
 - [x] **3.2** Gauge's rule tests read fixtures from here rather than carrying their own copies, which needs D-03 decided first. M. Deps: 3.1, D-03. Done when: a Gauge test names the fixture id it used. **Issue:** #18. (done 2026-11-20: D-03 recorded, `tools/manifest.py` provided for consumer content pinning, offline consumption contract documented; issue #18.)
 - [ ] **3.3** Airlock's Stellar-side detectors use at least one fixture from here. S. Deps: 3.1. Done when: G5 is ticked with the two repository names. **Issue:** #19.
 - [x] **3.4** This corpus reads one of its own captures back from the chain through the sibling action: `.posture/gauge.toml` declares the account behind `fixtures/testnet-multisig` as the capture describes it, and `.github/workflows/posture-watch.yml` runs that declaration on a schedule by `uses: posture-sec/stellar-posture-watch@<sha>`. S. Deps: none. Done when: the workflow has run on a runner from `main`, the tracking issue it maintains is named here with its label and the ledger it read, and the action's own roadmap can say a repository other than its own consumes it. **Issue:** #27. (done 2026-11-05 08:11: three dispatches of `posture-watch.yml` from `main` at `71dfffc`, whose logs are in section 7's row, opened issue #29 with the label `fixture-drift` at ledger 5568533 and left it alone on the run after that, and the action's own roadmap now names this repository as its second consumer.)
-- [x] **3.5** Add a question-driven selection guide in `corpus/choosing-a-fixture.md` and link it from the consumer documentation in `README.md`. S. Deps: 0.5. Done when: the guide maps whitespace handling, revoked master keys, high balance counts, data entries and multi-signature thresholds to fixture ids and declared shape labels, and identifies any scenario with no existing specimen as a future fixture. **Issue:** #50. (done 2026-11-24: added the consumer selection guide and README link; the revoked-master-key question names `master_absent` as an uncovered shape rather than misrepresenting a zero-weight master key.)
+- [x] **3.5** `README.md`: identify the `validate.py --report` block as an illustration of the nine baseline specimens and direct contributors to rerun it; guard against dated checkout claims in `tests/test_readme_report_block.py`. S. Deps: none. Done when: the explanatory note is undated and the test keeps it that way. **Issue:** #106.
 
 ## 6. Decision log
 
@@ -191,6 +191,7 @@ python3 scripts/roadmap_progress.py --check ROADMAP.md
 
 | When | What | Tasks |
 |---|---|---|
+| 2026-11-24 06:52 | Replace the report block's dated checkout claim with an illustrative baseline note and direct command, and add a contract test preventing dated report notes. | 3.5 |
 | 2026-11-24 06:55 | Task 3.5 (closing #50): add `corpus/choosing-a-fixture.md` as a question-driven guide mapping consumer scenarios to fixture ids and declared shape labels, explicitly identify the missing revoked-master-key specimen, and link the guide from README's consumer section. Verified locally: `python3 validate.py`, both unittest commands (177 and 97 tests), `ruff check .`, `ruff format --check .`, the specified `mypy` command, `python3 scripts/roadmap_progress.py --check ROADMAP.md` and `python3 scripts/sync_readme.py --check` all exited 0. | 3.5 |
 | 2026-11-23 15:29 | Tasks 2.39 to 2.42 (closing #55, #56, #57, #58; numbered after main's 2.27 to 2.38): document network-to-root conformance audit in corpus/network-conformance.md (#55), capture ten-balance boundary in fixtures/ten-balances-boundary (#56), capture testnet sponsored account in fixtures/testnet-sponsored (#57), and add synthetic null home domain in fixtures/null-home-domain (#58). | 2.39, 2.40, 2.41, 2.42 |
 | 2026-11-23 17:31 | Four validator suites and one rule (closing #79, #82, #83, #85): the nested-directory blind spot is pinned in both directions, duplicate `fixture.toml` keys are shown to arrive as `sidecar is not valid TOML` rather than a traceback, `check_captured` now refuses a sidecar ledger below the account's `last_modified_ledger` and the nine shipped fixtures still pass, and the CLI's stdout/stderr/exit split is driven as a subprocess over success, report, problem and unreadable-root corpora. | 2.31, 2.32, 2.33, 2.34 |
