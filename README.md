@@ -93,7 +93,7 @@ seed-shaped string (`S...`) is refused by both the capture tool and the validato
 | Indicator | Value | Source |
 |---|---|---|
 | Verified Captures | **12 accounts** (10 Mainnet, 2 Test) | `fixtures/` |
-| Test Suite | **286 passing** | `python -m unittest` |
+| Test Suite | **290 passing** | `python -m unittest` |
 | Integrity Assurance | **SHA-256 sidecars verified** | `validate.py` |
 | Safety Invariant | **Zero secret keys (`S...`)** | Validator enforced |
 <!-- METRICS:END -->
@@ -178,29 +178,20 @@ python3 tools/capture.py --network public --account G... \
 
 ## Coverage gaps, stated
 
-24 shape labels exist in `SCHEMA.md` section 5; see [Shape Label Matrix](corpus/shape-matrix.md)
-for the complete 9x24 cross-reference grid. Eighteen have a fixture. These 6 do not:
+The uncovered labels are derived from the vocabulary in `SCHEMA.md` section 5 and the
+union of shape lists in on-disk fixture sidecars. Synthetic fixtures count as coverage too.
+See [Shape Label Matrix](corpus/shape-matrix.md) for the complete 9x24 cross-reference grid.
 
-- `master_absent`, `no_signers`
-- `auth_revocable`, `auth_immutable`, `auth_clawback_enabled`
+<!-- SHAPE-GAPS:START -->
+18 of 24 shape labels have a fixture. These 6 do not:
+
+- `auth_clawback_enabled`
+- `auth_immutable`
+- `auth_revocable`
+- `master_absent`
 - `no_balances`
-
-`master_absent` and `no_signers` need an account whose master key was revoked, which is rare
-and must not be manufactured (see [Signer Structures](corpus/signers.md) for how `master_is_signer`
-checks key presence rather than signing authority). The three remaining auth flags need issuer accounts, and
-roadmap 2.5 asks for one flag per account rather than one issuer carrying all three;
-`auth_required` has had a fixture since 2026-11-02. `no_balances` has not appeared in any
-read taken for this corpus: every account fetched while hunting these shapes, on both
-networks, carries at least its native balance, so 2.3 may end in a decision that the label
-stays uncovered rather than in a capture. `has_data`, `sponsored` and the first testnet
-capture arrived on 2026-11-03 as roadmap 2.1, 2.2 and 2.6.
-
-### Synthetic fixtures
-
-While live captures are preferred whenever accounts can be located on chain, synthetic
-fixtures are supported under `SCHEMA.md` Section 3 to test parser defense boundaries:
-
-- `fixtures/null-home-domain`: provides an explicit JSON null home domain (`"home_domain": null`) to verify parser null defenses without requiring live Horizon infrastructure. All provenance keys are strictly omitted per schema rules.
+- `no_signers`
+<!-- SHAPE-GAPS:END -->
 
 ## Checks
 
